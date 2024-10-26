@@ -8,13 +8,24 @@ public class LanternController : MonoBehaviour
     public float timeOffset;
     Vector2 velocity;
 
+    public float lightDistance;
+
     public float velocityRotDiviser;
     public float rotationAmount;
     public float rotationSpeed;
 
+    public GameObject lightRef;
+
     Vector3 rotationDelta;
 
     public Camera cam;
+
+    public static LanternController instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Update()
     {
@@ -28,5 +39,15 @@ public class LanternController : MonoBehaviour
         rotationDelta = Vector3.Lerp(rotationDelta, movementRot, rotationSpeed * Time.deltaTime);
 
         transform.eulerAngles = new Vector3(0, 0, Mathf.Clamp(rotationDelta.x, -60, 60));
+    }
+
+    public void SetActiveLight(bool active)
+    {
+        lightRef.SetActive(active);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(transform.position, lightDistance);
     }
 }

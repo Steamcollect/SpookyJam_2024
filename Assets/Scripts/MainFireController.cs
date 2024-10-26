@@ -62,6 +62,21 @@ public class MainFireController : MonoBehaviour
 
         return true;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Player") && HaveFoundEveryFire())
+        {
+            StartCoroutine(EndGame());
+        }
+    }
+
+    IEnumerator EndGame()
+    {
+        FadePanel.instance.FadeOut();
+
+        yield return new WaitForSeconds(1);
+    }
 }
 
 [System.Serializable]
